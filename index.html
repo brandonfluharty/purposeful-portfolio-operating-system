@@ -418,7 +418,10 @@
 .trig-status.ok { background:rgba(80,210,140,.14); color:#6fe0a3; }
 .trig-rule { font-size:12.5px; color:var(--muted); margin-top:6px; }
 .map-grid { display:grid; grid-template-columns:repeat(3,1fr); gap:12px; }
-.map-card { background:var(--dark-2,#0a1a30); border:1px solid var(--dark-3,#1c3252); border-radius:12px; padding:14px; }
+.map-card { background:var(--dark-2,#0a1a30); border:1px solid var(--dark-3,#1c3252); border-radius:12px; padding:14px; text-decoration:none; color:inherit; display:block; cursor:pointer; transition:all .15s; }
+.map-card:hover { border-color:var(--gold); transform:translateY(-2px); }
+.map-card.selected { border-color:var(--gold); box-shadow:0 0 0 2px rgba(255,216,29,.45); }
+.map-card .mc-open { font-size:11px; font-weight:700; color:var(--gold); margin-top:8px; }
 .map-card .mc-num { font-size:11px; font-weight:700; color:var(--gold); letter-spacing:.04em; }
 .map-card .mc-name { font-size:14px; font-weight:700; color:#fff; margin:4px 0 6px; line-height:1.25; }
 .map-card .mc-row { font-size:12px; color:var(--muted); margin-bottom:4px; }
@@ -477,18 +480,18 @@
 <section id="s-dashboard" class="panel">
   <div class="panel-header">
     <h2>Wealth Dashboard: <span class="accent">One screen, four numbers.</span></h2>
-    <p>A forecast you can't see is a forecast you won't run. Enter your numbers and the dashboard returns the one figure that tells you whether the system is working: months to FINE (Financial Independence, New Endeavor) at your current trajectory.</p>
+    <p>A forecast you can't see is a forecast you won't run. Enter your numbers and the dashboard returns the one figure that tells you whether the system is working: months to F.I.N.E. (Financially Independent, Next Endeavor) at your current trajectory.</p>
   </div>
   <div class="grid">
     <div class="card">
       <h3>Your Inputs</h3>
       <div class="field">
         <label>Net worth across the seven-account architecture <span class="val" id="d-nw-v">$1,200,000</span></label>
-        <input type="range" id="d-nw" min="0" max="6000000" step="25000" value="1200000" />
+        <input type="range" id="d-nw" min="0" max="20000000" step="50000" value="1200000" />
       </div>
       <div class="field">
         <label>Annual cost of living <span class="val" id="d-col-v">$240,000</span></label>
-        <input type="range" id="d-col" min="40000" max="600000" step="5000" value="240000" />
+        <input type="range" id="d-col" min="20000" max="1000000" step="5000" value="240000" />
       </div>
       <div class="field">
         <label>Monthly owned + passive income (your Lesson 11 bridge) <span class="val" id="d-owned-v">$3,000</span></label>
@@ -500,18 +503,18 @@
       </div>
       <div class="field">
         <label>Your effective tax rate <span class="val" id="d-tax-v">24%</span></label>
-        <input type="range" id="d-tax" min="10" max="45" step="1" value="24" />
+        <input type="range" id="d-tax" min="0" max="45" step="1" value="24" />
       </div>
       <div class="field">
         <label>Comparable paycheck-only effective rate <span class="val" id="d-taxcomp-v">32%</span></label>
         <input type="range" id="d-taxcomp" min="10" max="45" step="1" value="32" />
       </div>
-      <p style="font-size:11.5px;color:var(--muted);margin-top:8px;">FINE is sized at 70% of your annual cost of living (Lesson 10). Passive income is modeled at a 4% safe withdrawal rate on net worth, plus your owned income.</p>
+      <p style="font-size:11.5px;color:var(--muted);margin-top:8px;">F.I.N.E. is sized at 70% of your annual cost of living (Lesson 10). Passive income is modeled at a 4% safe withdrawal rate on net worth, plus your owned income.</p>
     </div>
     <div>
       <div class="metrics">
         <div class="metric hero-metric">
-          <div class="label">Months to FINE at current trajectory</div>
+          <div class="label">Months to F.I.N.E. at current trajectory</div>
           <div class="value" id="d-months">—</div>
         </div>
       </div>
@@ -521,7 +524,7 @@
           <div class="value" id="d-nwout">—</div>
         </div>
         <div class="metric">
-          <div class="label">% of FINE filled / month</div>
+          <div class="label">% of F.I.N.E. filled / month</div>
           <div class="value" id="d-fine">—</div>
         </div>
       </div>
@@ -620,7 +623,7 @@
       </div>
       <div class="field">
         <label>Cash floor that fires a refill <span class="val" id="t-cashfloor-v">6 months</span></label>
-        <input type="range" id="t-cashfloor" min="3" max="18" step="1" value="6" />
+        <input type="range" id="t-cashfloor" min="3" max="24" step="1" value="6" />
       </div>
       <div class="field">
         <label>Contribution-pace gap that fires a catch-up <span class="val" id="t-pace-v">10%</span></label>
@@ -677,7 +680,7 @@
 <section id="s-forecast" class="panel">
   <div class="panel-header">
     <h2>Five-Year Forecast: <span class="accent">The trajectory the cadence protects.</span></h2>
-    <p>Net worth compounding (Lesson 10) plus owned-income growth (Lesson 11) plus tax savings (Lesson 9), pointed at one arrival date. Move the sliders and watch months-to-FINE move with them.</p>
+    <p>Net worth compounding (Lesson 10) plus owned-income growth (Lesson 11) plus tax savings (Lesson 9), pointed at one arrival date. Move the sliders and watch months-to-F.I.N.E. move with them.</p>
   </div>
   <div class="grid">
     <div class="card">
@@ -688,7 +691,7 @@
       </div>
       <div class="field">
         <label>Owned-income growth (per year) <span class="val" id="f-ownedgrow-v">25%</span></label>
-        <input type="range" id="f-ownedgrow" min="0" max="100" step="5" value="25" />
+        <input type="range" id="f-ownedgrow" min="0" max="1000" step="5" value="25" />
       </div>
       <div class="field">
         <label>Expected return (per year) <span class="val" id="f-return-v">7%</span></label>
@@ -697,7 +700,7 @@
       <p style="font-size:11.5px;color:var(--muted);margin-top:8px;">Starting net worth, cost of living, and current owned income are pulled from your Wealth Dashboard inputs. Adjust them there.</p>
       <div class="metrics" style="margin-top:14px;">
         <div class="metric hero-metric">
-          <div class="label">Months to FINE</div>
+          <div class="label">Months to F.I.N.E.</div>
           <div class="value" id="f-months">—</div>
         </div>
       </div>
@@ -713,7 +716,7 @@
 <section id="s-map" class="panel">
   <div class="panel-header">
     <h2>All-Playgrounds Map: <span class="accent">Twelve tools, one decision each.</span></h2>
-    <p>The whole path on one screen. Each Playground supports one decision and earns a revisit at a specific trigger. When your dashboard flags something, this is how you find your way back to the right tool.</p>
+    <p>The whole path on one screen. Each Playground supports one decision and earns a revisit at a specific trigger. When your dashboard flags something, this is how you find your way back to the right tool. Tap any card to open that Playground in a new tab.</p>
   </div>
   <div class="map-grid" id="map-grid"></div>
 </section>
@@ -729,7 +732,7 @@
       <div class="twin-avatar"><img id="twin-avatar-img" alt="Brandon" /></div>
       <h3>Brandon's AI Twin</h3>
       <p>Trained on this lesson: the operating cadence, the dashboard, the quarterly review runbook, and the rebalancing triggers.</p>
-      <div class="scope-note"><strong>Scope:</strong> the minimum viable review, which Playground to revisit first, knowing the system works, the biggest integration-stage mistake, when to bring in an advisor, and what changes after you cross FINE.</div>
+      <div class="scope-note"><strong>Scope:</strong> the minimum viable review, which Playground to revisit first, knowing the system works, the biggest integration-stage mistake, when to bring in an advisor, and what changes after you cross F.I.N.E.</div>
     </div>
     <div class="chat-card">
       <div class="chat-messages" id="chat-messages">
@@ -803,7 +806,7 @@ const MONTHS = [
   { n:'Mar', q:true, tag:'Q1 review', d:'<strong>March — Quarterly Review.</strong> Last Friday, 90 minutes. Work the five sections: cash flow, investments, taxes, structure, decisions. First review of the year sets the tone. Refresh the dashboard and pick next quarter’s Playground.' },
   { n:'Apr', q:false, tag:'Q1 taxes + IRA', d:'<strong>April.</strong> The heavy tax month: Q1 estimated payment, last year’s return, and the final day for prior-year IRA and HSA contributions (all April 15). If the quarterly review in March did its job, none of this is a surprise.' },
   { n:'May', q:false, tag:'', d:'<strong>May.</strong> Quiet. Cadence only. A good month to check that contribution pace is on track a third of the way through the year.' },
-  { n:'Jun', q:true, tag:'Q2 review + taxes', d:'<strong>June — Quarterly Review.</strong> The Q2 estimated payment lands June 15, so fold it into the review. Mid-year is the natural checkpoint for the FINE-gap trajectory: is months-to-FINE moving the way you projected?' },
+  { n:'Jun', q:true, tag:'Q2 review + taxes', d:'<strong>June — Quarterly Review.</strong> The Q2 estimated payment lands June 15, so fold it into the review. Mid-year is the natural checkpoint for the F.I.N.E.-gap trajectory: is months-to-F.I.N.E. moving the way you projected?' },
   { n:'Jul', q:false, tag:'', d:'<strong>July.</strong> Quiet. Cadence only. Halfway point — a good time to glance at the Five-Year Forecast and confirm the trajectory still holds.' },
   { n:'Aug', q:false, tag:'', d:'<strong>August.</strong> Quiet. Cadence only. Begin thinking about back-half tax moves so the December window isn’t a scramble.' },
   { n:'Sep', q:true, tag:'Q3 review + taxes', d:'<strong>September — Quarterly Review.</strong> The Q3 estimated payment is due Sept 15. This review starts the year-end tax planning: harvesting candidates, conversion room, charitable timing all get scoped here.' },
@@ -877,9 +880,9 @@ function updateDashboard(){
 
   const co = document.getElementById('d-callout');
   if (coverage >= 100) {
-    co.innerHTML = '<strong>You’re at or past FINE.</strong> Your passive and owned income already covers 70% of your cost of living. The work for you is discipline: keep the cadence so the coverage holds and the structure stays optimized.';
+    co.innerHTML = '<strong>You’re at or past F.I.N.E.</strong> Your passive and owned income already covers 70% of your cost of living. The work for you is discipline: keep the cadence so the coverage holds and the structure stays optimized.';
   } else {
-    co.innerHTML = `<strong>FINE target:</strong> ${fmtK(fineAnnual)}/yr (70% of ${fmtK(v.col)}). You’re filling <strong>${Math.round(coverage)}%</strong> of it per month right now, and at this trajectory you reach FINE in <strong>${fmtMonths(m)}</strong>. The Five-Year Forecast tab shows what moving contribution, owned-income growth, and return does to that date. Your effective rate is ${ptsSaved} points under a paycheck-only earner — that gap compounds inside the architecture.`;
+    co.innerHTML = `<strong>F.I.N.E. target:</strong> ${fmtK(fineAnnual)}/yr (70% of ${fmtK(v.col)}). You’re filling <strong>${Math.round(coverage)}%</strong> of it per month right now, and at this trajectory you reach F.I.N.E. in <strong>${fmtMonths(m)}</strong>. The Five-Year Forecast tab shows what moving contribution, owned-income growth, and return does to that date. Your effective rate is ${ptsSaved} points under a paycheck-only earner — that gap compounds inside the architecture.`;
   }
   notifyResize();
 }
@@ -920,7 +923,7 @@ Run the last Friday of the quarter. Work the sections in order.
     >> Refresh: the All-Playgrounds Map.
 
 CLOSE-OUT
-    [ ] Dashboard refreshed (months-to-FINE updated)
+    [ ] Dashboard refreshed (months-to-F.I.N.E. updated)
     [ ] Actions written down
     [ ] Next-quarter Playground chosen
     [ ] Laptop closed. Done until next Friday slot.`;
@@ -1037,8 +1040,8 @@ function updateForecast(){
   }
   const co=document.getElementById('f-callout');
   co.innerHTML = m<=60
-    ? `At this trajectory your passive + owned income crosses the FINE line in <strong>${fmtMonths(m)}</strong> — inside the five-year window shown. The crossover point on the chart is your walk-away date.`
-    : `At this trajectory FINE lands in <strong>${fmtMonths(m)}</strong>, past the five-year window. Nudge contribution, owned-income growth, or return to pull the crossover into view.`;
+    ? `At this trajectory your passive + owned income crosses the F.I.N.E. line in <strong>${fmtMonths(m)}</strong> — inside the five-year window shown. The crossover point on the chart is your walk-away date.`
+    : `At this trajectory F.I.N.E. lands in <strong>${fmtMonths(m)}</strong>, past the five-year window. Nudge contribution, owned-income growth, or return to pull the crossover into view.`;
 
   const ctx=document.getElementById('f-chart');
   if (!ctx || typeof Chart==='undefined'){ notifyResize(); return; }
@@ -1047,7 +1050,7 @@ function updateForecast(){
     type:'line',
     data:{ labels, datasets:[
       { label:'Passive + owned income / mo', data:passive, borderColor:'#4a90e2', backgroundColor:'rgba(74,144,226,.12)', fill:true, tension:.25, pointRadius:0, borderWidth:2 },
-      { label:'FINE target / mo', data:target, borderColor:'#FFD81D', borderDash:[6,4], pointRadius:0, borderWidth:2, fill:false }
+      { label:'F.I.N.E. target / mo', data:target, borderColor:'#FFD81D', borderDash:[6,4], pointRadius:0, borderWidth:2, fill:false }
     ]},
     options:{ responsive:true, maintainAspectRatio:false,
       plugins:{ legend:{ labels:{ color:'#cfe0f5', font:{size:11} } } },
@@ -1061,27 +1064,32 @@ function updateForecast(){
 // TAB 7: ALL-PLAYGROUNDS MAP
 // =====================================================
 const PLAYGROUNDS = [
-  { n:1, name:'How Deep Can You Get This Month?', dec:'How lean can you run, and your survival depth score', rev:'When income drops or expenses jump' },
-  { n:2, name:'Earn Like the 1%. Live Like the 50%.', dec:'Your real cost of living and your Enough Number', rev:'Annually, or after any lifestyle change' },
-  { n:3, name:'From Employee to Asset Owner', dec:'The shift from paycheck thinking to owned assets', rev:'When a vesting or windfall event lands' },
-  { n:4, name:'Corporate Benefits Gold Mine', dec:'Which employer benefits to max, and in what order', rev:'Each open-enrollment and comp change' },
-  { n:5, name:'What Real Diversification Looks Like', dec:'Spreading risk across asset classes and streams', rev:'When the drift trigger fires' },
-  { n:6, name:'Digital Assets Playground', dec:'Whether and how much digital-asset allocation fits', rev:'When sizing or rebalancing the sleeve' },
-  { n:7, name:'Real Estate Playbook', dec:'Own, rent, or leverage for your situation', rev:'Before any property decision' },
-  { n:8, name:'Set Up Your LLC This Weekend', dec:'When and how to incorporate', rev:'The quarter you cross $5K owned revenue' },
-  { n:9, name:'Pay Yourself Before the IRS', dec:'Your tax operating system and S-Corp election', rev:'Each quarterly review, Taxes section' },
-  { n:10, name:'The Wealth Architecture', dec:'Seven-account sequencing and your FINE number', rev:'When contributions or limits change' },
-  { n:11, name:'The Bridge', dec:'Building owned revenue while still employed', rev:'When owned-income growth stalls' },
-  { n:12, name:'Run Your Portfolio Like Your Pipeline (you are here)', dec:'The operating cadence that runs all twelve', rev:'Every quarter, by design', current:true }
+  { n:1, name:'How Deep Can You Get This Month?', dec:'How lean can you run, and your survival depth score', rev:'When income drops or expenses jump', url:'https://docs.google.com/spreadsheets/d/1qdCL7uUVUu-LLpx8S6BveW9I_G3npy3H/edit?gid=2130686861#gid=2130686861' },
+  { n:2, name:'Earn Like the 1%. Live Like the 50%.', dec:'Your real cost of living and your Enough Number', rev:'Annually, or after any lifestyle change', url:'https://docs.google.com/spreadsheets/d/19a2lagtrmepbDB6QsN8OaS4N4kEzVHXR/edit?gid=1358299279#gid=1358299279' },
+  { n:3, name:'From Employee to Asset Owner', dec:'The shift from paycheck thinking to owned assets', rev:'When a vesting or windfall event lands', url:'https://docs.google.com/spreadsheets/d/1d4z-g4xelLYB7r002CpcSeGA2oIWe_Va/edit?gid=879824208#gid=879824208' },
+  { n:4, name:'Corporate Benefits Gold Mine', dec:'Which employer benefits to max, and in what order', rev:'Each open-enrollment and comp change', url:'https://www.purposefulperformer.com/benefitsplayground' },
+  { n:5, name:'What Real Diversification Looks Like', dec:'Spreading risk across asset classes and streams', rev:'When the drift trigger fires', url:'https://www.purposefulperformer.com/diversification-playground' },
+  { n:6, name:'Digital Assets Playground', dec:'Whether and how much digital-asset allocation fits', rev:'When sizing or rebalancing the sleeve', url:'https://www.purposefulperformer.com/digital-assets-playground' },
+  { n:7, name:'Real Estate Playbook', dec:'Own, rent, or leverage for your situation', rev:'Before any property decision', url:'https://www.purposefulperformer.com/real-estate-playground' },
+  { n:8, name:'Set Up Your LLC This Weekend', dec:'When and how to incorporate', rev:'The quarter you cross $5K owned revenue', url:'https://www.purposefulperformer.com/llc-playground' },
+  { n:9, name:'Pay Yourself Before the IRS', dec:'Your tax operating system and S-Corp election', rev:'Each quarterly review, Taxes section', url:'https://www.purposefulperformer.com/tax-strategy-playground' },
+  { n:10, name:'The Wealth Architecture', dec:'Seven-account sequencing and your F.I.N.E. number', rev:'When contributions or limits change', url:'https://www.purposefulperformer.com/wealth-architecture-playground' },
+  { n:11, name:'The Bridge', dec:'Building owned revenue while still employed', rev:'When owned-income growth stalls', url:'https://www.purposefulperformer.com/the-bridge-playground' },
+  { n:12, name:'Run Your Portfolio Like Your Pipeline (you are here)', dec:'The operating cadence that runs all twelve', rev:'Every quarter, by design', current:true, url:'https://www.purposefulperformer.com/purposeful-portfolio-operating-system' }
 ];
 function renderMap(){
   document.getElementById('map-grid').innerHTML = PLAYGROUNDS.map(p =>
-    `<div class="map-card${p.current?' current':''}">
+    `<a class="map-card${p.current?' current':''}" href="${p.url}" target="_blank" rel="noopener" data-n="${p.n}">
       <div class="mc-num">LESSON ${p.n}</div>
       <div class="mc-name">${p.name}</div>
       <div class="mc-row"><strong>Decides:</strong> ${p.dec}</div>
       <div class="mc-row"><strong>Revisit:</strong> ${p.rev}</div>
-    </div>`).join('');
+      <div class="mc-open">Open in new tab \u2197</div>
+    </a>`).join('');
+  document.querySelectorAll('#map-grid .map-card').forEach(c => c.addEventListener('click', () => {
+    document.querySelectorAll('#map-grid .map-card').forEach(x => x.classList.remove('selected'));
+    c.classList.add('selected');
+  }));
 }
 
 // =====================================================
@@ -1089,12 +1097,12 @@ function renderMap(){
 // =====================================================
 const STARTERS = [
   { q:'What’s the minimum viable version of the quarterly review?', a:'Thirty minutes, two questions. <strong>One:</strong> did the plan hold this quarter? <strong>Two:</strong> does anything need a decision before next quarter? That’s it. The full five-section runbook is the goal, but a half-hour on the calendar beats a perfect review you never run. Start there and let it grow into the 90 minutes.' },
-  { q:'Which Playground do I revisit first if I’m behind on FINE?', a:'Start with the <strong>Wealth Dashboard</strong> to see the gap, then go to whichever input is weakest. If owned income is flat, revisit <strong>Lesson 11 (The Bridge)</strong>. If contributions are light, revisit <strong>Lesson 10 (Wealth Architecture)</strong>. If taxes are eating too much, revisit <strong>Lesson 9</strong>. The All-Playgrounds Map tab tells you which decision each tool supports.' },
-  { q:'How do I know my system is actually working?', a:'One number: <strong>months to FINE</strong>. If it’s trending down quarter over quarter, the system works. The individual accounts will zig and zag; the headline figure is the signal. Watch it at each review and ignore the daily noise in between.' },
+  { q:'Which Playground do I revisit first if I’m behind on F.I.N.E.?', a:'Start with the <strong>Wealth Dashboard</strong> to see the gap, then go to whichever input is weakest. If owned income is flat, revisit <strong>Lesson 11 (The Bridge)</strong>. If contributions are light, revisit <strong>Lesson 10 (Wealth Architecture)</strong>. If taxes are eating too much, revisit <strong>Lesson 9</strong>. The All-Playgrounds Map tab tells you which decision each tool supports.' },
+  { q:'How do I know my system is actually working?', a:'One number: <strong>months to F.I.N.E.</strong>. If it’s trending down quarter over quarter, the system works. The individual accounts will zig and zag; the headline figure is the signal. Watch it at each review and ignore the daily noise in between.' },
   { q:'What’s the biggest mistake at the integration stage?', a:'<strong>Letting attention follow excitement instead of the calendar.</strong> The bridge revenue gets love because it’s fun; the tax picture gets ignored until April. The cadence fixes that by giving every section the same 90 minutes on schedule, before any of them get loud. The slot is the whole point.' },
   { q:'Should I ever skip the quarterly review?', a:'No. Skipping is how eleven good decisions quietly drift back apart. If you’re slammed, run the 30-minute minimum version instead of skipping. The cadence only works because it’s non-negotiable, the same way your forecast review at work is non-negotiable.' },
   { q:'When do I add a financial advisor versus running this myself?', a:'Run the cadence yourself — it’s not hard once it’s on the calendar. Bring in a professional for a <strong>defined slice</strong> where the complexity is real: estate planning, large Roth conversions, or a concentrated-stock unwind. You keep the operating system; they handle the specialist decision. Don’t outsource the whole thing, or you lose the visibility that makes it yours.' },
-  { q:'What changes after I cross FINE?', a:'The math flips from accumulation to decisions: spend versus keep compounding, lumpy post-W-2 income that may not fit your old triggers, and conversion planning that gets more complex with time. Keep the exact same cadence — it mattered when the dollars were small, and it matters most when they’re large and there’s no employer rhythm carrying you.' }
+  { q:'What changes after I cross F.I.N.E.?', a:'The math flips from accumulation to decisions: spend versus keep compounding, lumpy post-W-2 income that may not fit your old triggers, and conversion planning that gets more complex with time. Keep the exact same cadence — it mattered when the dollars were small, and it matters most when they’re large and there’s no employer rhythm carrying you.' }
 ];
 function renderSuggested(){
   document.getElementById('suggested').innerHTML = STARTERS.map((s,i) => `<button data-idx="${i}">${s.q}</button>`).join('');
